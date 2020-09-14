@@ -33,10 +33,12 @@ void DrawingCanvas::onEnter() {
 
 void DrawingCanvas::setupTouchHandling() {
 	static Vec2 lastTouchPos;
+	static float lastRadius = INITIAL_RADIUS;
 	auto touchListener = EventListenerTouchOneByOne::create();
 
 	touchListener->onTouchBegan = [&](Touch* touch, Event* event) {
 		lastTouchPos = drawNode->convertTouchToNodeSpace(touch);
+		lastRadius = INITIAL_RADIUS;
 		return true;
 	};
 
@@ -44,7 +46,17 @@ void DrawingCanvas::setupTouchHandling() {
 		Vec2 touchPos = drawNode->convertTouchToNodeSpace(touch);
 		//log("Touch Moved! x:%f y:%f", touchPos.x, touchPos.y);
 
-		drawNode->drawSegment(lastTouchPos, touchPos, INITIAL_RADIUS, Color4F(selectedColour));
+		float distance = lastTouchPos.distance(touchPos);
+		float dt = 1.0f / 60.0f;
+		float rc = 1.0f;
+		float alpha = dt / (rc + dt);
+		//float radius = distance;
+		float radius = (alpha * distance) + (1.0f - alpha) * lastRadius;
+
+		//drawNode->drawSegment(lastTouchPos, touchPos, INITIAL_RADIUS, Color4F(selectedColour));
+		drawNode->drawSegment(lastTouchPos, touchPos, radius, Color4F(selectedColour));
+
+		lastRadius = radius;
 		lastTouchPos = touchPos;
 	};
 
