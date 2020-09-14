@@ -25,6 +25,7 @@ void DrawingCanvas::onEnter() {
 	drawNode->setContentSize(visibleSize);
 
 	DrawingCanvas::setupTouchHandling();
+	DrawingCanvas::setupMenus(); // Create buttons
 }
 
 void DrawingCanvas::setupTouchHandling() {
@@ -45,4 +46,38 @@ void DrawingCanvas::setupTouchHandling() {
 	};
 
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+}
+
+void DrawingCanvas::setupMenus() {
+	Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+	// create solo button
+	ui::Button* clearButton = ui::Button::create();
+	clearButton->setAnchorPoint(Vec2(1.0f, 1.0f));
+	clearButton->setPosition(Vec2(visibleSize.width, visibleSize.height));
+	clearButton->loadTextures("clearButton.png", "clearButtonPressed.png");
+	clearButton->addTouchEventListener(CC_CALLBACK_2(DrawingCanvas::clearPressed, this));
+	this->addChild(clearButton);
+
+	// create duo button
+	ui::Button* backButton = ui::Button::create();
+	backButton->setAnchorPoint(Vec2(0.0f, 1.0f));
+	backButton->setPosition(Vec2(0.0f, visibleSize.height));
+	backButton->loadTextures("backButton.png", "backButtonPressed.png");
+	backButton->addTouchEventListener(CC_CALLBACK_2(DrawingCanvas::backPressed, this));
+	this->addChild(backButton);
+}
+
+void DrawingCanvas::clearPressed(Ref *pSender, ui::Widget::TouchEventType eEventType) {
+	if (eEventType == ui::Widget::TouchEventType::ENDED)
+	{
+
+	}
+}
+
+void DrawingCanvas::backPressed(Ref *pSender, ui::Widget::TouchEventType eEventType) {
+	if (eEventType == ui::Widget::TouchEventType::ENDED)
+	{
+
+	}
 }

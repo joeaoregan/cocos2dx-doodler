@@ -1,4 +1,5 @@
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 class DrawingCanvas : public cocos2d::Node
 {
@@ -11,6 +12,9 @@ protected:
 	bool init() override;
 	void onEnter() override;
 	void setupTouchHandling();
+	void setupMenus();
+	void clearPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
+	void backPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 
 	cocos2d::LayerColor* background;
 };
