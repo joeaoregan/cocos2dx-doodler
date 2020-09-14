@@ -71,13 +71,13 @@ void DrawingCanvas::setupMenus() {
 void DrawingCanvas::clearPressed(Ref *pSender, ui::Widget::TouchEventType eEventType) {
 	if (eEventType == ui::Widget::TouchEventType::ENDED)
 	{
-
+		drawNode->clear();
 	}
 }
 
 void DrawingCanvas::backPressed(Ref *pSender, ui::Widget::TouchEventType eEventType) {
 	if (eEventType == ui::Widget::TouchEventType::ENDED)
 	{
-
+		Director::getInstance()->popScene();
 	}
 }
