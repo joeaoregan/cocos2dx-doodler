@@ -15,6 +15,8 @@ bool DrawingCanvas::init() {
 	drawNode = DrawNode::create();
 	this->addChild(drawNode);
 
+	selectedColour = COLOUR_GREEN;
+
 	return true;
 }
 
@@ -42,7 +44,7 @@ void DrawingCanvas::setupTouchHandling() {
 		Vec2 touchPos = drawNode->convertTouchToNodeSpace(touch);
 		//log("Touch Moved! x:%f y:%f", touchPos.x, touchPos.y);
 
-		drawNode->drawSegment(lastTouchPos, touchPos, INITIAL_RADIUS, Color4F(0.0f, 0.0f, 0.0f, 1.0f));
+		drawNode->drawSegment(lastTouchPos, touchPos, INITIAL_RADIUS, Color4F(selectedColour));
 		lastTouchPos = touchPos;
 	};
 
@@ -52,7 +54,7 @@ void DrawingCanvas::setupTouchHandling() {
 void DrawingCanvas::setupMenus() {
 	Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
-	// create solo button
+	// create clear button
 	ui::Button* clearButton = ui::Button::create();
 	clearButton->setAnchorPoint(Vec2(1.0f, 1.0f));
 	clearButton->setPosition(Vec2(visibleSize.width, visibleSize.height));
@@ -60,7 +62,7 @@ void DrawingCanvas::setupMenus() {
 	clearButton->addTouchEventListener(CC_CALLBACK_2(DrawingCanvas::clearPressed, this));
 	this->addChild(clearButton);
 
-	// create duo button
+	// create back button
 	ui::Button* backButton = ui::Button::create();
 	backButton->setAnchorPoint(Vec2(0.0f, 1.0f));
 	backButton->setPosition(Vec2(0.0f, visibleSize.height));
@@ -69,7 +71,7 @@ void DrawingCanvas::setupMenus() {
 	this->addChild(backButton);
 	   
 	// create check sprite
-	Sprite* check = Sprite::create("checkMark.png");
+	check = Sprite::create("checkMark.png");
 	check->setAnchorPoint(Vec2(0.5f, 0.5f));
 	check->setNormalizedPosition(Vec2(0.5f, 0.5f));
 
@@ -115,5 +117,19 @@ void DrawingCanvas::backPressed(Ref *pSender, ui::Widget::TouchEventType eEventT
 }
 
 void DrawingCanvas::colourChangePressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType) {
+	ui::Button* pressedButton = static_cast<ui::Button*>(pSender);
 
+	if (eEventType == ui::Widget::TouchEventType::ENDED) 
+		//selectedColour = static_cast<Color4F>(pressedButton->getColor());
+		selectedColour = Color4F(pressedButton->getColor());
+	check->retain();	// retain so not deallocated
+	check->removeFromParent();
+	pressedButton->addChild(check);
+	check->release();
+	
+	// button scale
+	pressedButton->setScale(0.85f);
+	if (eEventType == ui::Widget::TouchEventType::CANCELED || eEventType == ui::Widget::TouchEventType::ENDED) {
+		pressedButton->setScale(1.0f);
+	}
 }
