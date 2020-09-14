@@ -1,5 +1,6 @@
 #include "Lobby.h"
 #include "DrawingCanvas.h"
+#include "Constants.h"
 
 USING_NS_CC;
 
@@ -8,7 +9,7 @@ bool Lobby::init() {
 		return false;
 	}
 
-	LayerColor* background = LayerColor::create(Color4B(255, 255, 255, 255));
+	LayerColor* background = LayerColor::create(Color4B(COLOUR_WHITE));
 	this->addChild(background);
 
 	return true;
