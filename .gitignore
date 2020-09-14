@@ -8,3 +8,6 @@
 /Resources/*
 .cocos-project.json
 CMakeLists.txt
+
+# Include
+!Resources/res
