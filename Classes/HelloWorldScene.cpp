@@ -22,7 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "DrawingCanvas.h"
+#include "Lobby.h"
+//#include "DrawingCanvas.h"
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
@@ -50,8 +51,11 @@ bool HelloWorld::init()
         return false;
     }
 
-	DrawingCanvas* drawingCanvas = DrawingCanvas::create();
-	this->addChild(drawingCanvas);
+	Lobby* lobby = Lobby::create();
+	this->addChild(lobby);
+
+	//DrawingCanvas* drawingCanvas = DrawingCanvas::create();
+	//this->addChild(drawingCanvas);
 
     return true;
 }
