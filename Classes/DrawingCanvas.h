@@ -8,6 +8,8 @@ public:
 
 protected:
 	cocos2d::DrawNode* drawNode;
+	cocos2d::Sprite* check;
+	cocos2d::Color4F selectedColour;
 
 	bool init() override;
 	void onEnter() override;
@@ -15,6 +17,7 @@ protected:
 	void setupMenus();
 	void clearPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 	void backPressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
+	void colourChangePressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType);
 
 	cocos2d::LayerColor* background;
 };

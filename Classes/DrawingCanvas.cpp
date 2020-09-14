@@ -67,6 +67,37 @@ void DrawingCanvas::setupMenus() {
 	backButton->loadTextures("backButton.png", "backButtonPressed.png");
 	backButton->addTouchEventListener(CC_CALLBACK_2(DrawingCanvas::backPressed, this));
 	this->addChild(backButton);
+	   
+	// create check sprite
+	Sprite* check = Sprite::create("checkMark.png");
+	check->setAnchorPoint(Vec2(0.5f, 0.5f));
+	check->setNormalizedPosition(Vec2(0.5f, 0.5f));
+
+	// colour buttons
+	Node* colourButtonLayout = Node::create();
+	colourButtonLayout->setContentSize(Size(visibleSize.width, visibleSize.height * 0.2f));
+	colourButtonLayout->setAnchorPoint(Vec2(0.5f, 0.0f));
+	colourButtonLayout->setPosition(Vec2(visibleSize.width / 2.0f, 0.0f));
+	this->addChild(colourButtonLayout);
+
+	// Add 5 buttons
+	for (int i = 1; i <= 5; ++i) {
+		ui::Button* colourButton = ui::Button::create();
+		colourButton->setAnchorPoint(Vec2(0.5f, 0.0f));
+		colourButton->setPosition(Vec2(visibleSize.width * i * (1.0f/6.0f), 0.0f));
+		colourButton->loadTextures("colorSwatch.png", "colorSwatch.png");
+		colourButton->addTouchEventListener(CC_CALLBACK_2(DrawingCanvas::colourChangePressed, this));
+		if (i == 1)	colourButton->setColor(Color3B(COLOUR_RED));
+		if (i == 2) colourButton->setColor(Color3B(COLOUR_YELLOW));
+		if (i == 3)
+		{
+			colourButton->setColor(Color3B(COLOUR_GREEN));
+			colourButton->addChild(check);
+		}
+		if (i == 4) colourButton->setColor(Color3B(COLOUR_BLUE));
+		if (i == 5) colourButton->setColor(Color3B(COLOUR_PURPLE));
+		colourButtonLayout->addChild(colourButton);
+	}
 }
 
 void DrawingCanvas::clearPressed(Ref *pSender, ui::Widget::TouchEventType eEventType) {
@@ -81,4 +112,8 @@ void DrawingCanvas::backPressed(Ref *pSender, ui::Widget::TouchEventType eEventT
 	{
 		Director::getInstance()->popScene();
 	}
+}
+
+void DrawingCanvas::colourChangePressed(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType) {
+
 }
