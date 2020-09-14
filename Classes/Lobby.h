@@ -11,6 +11,7 @@ public:
 protected:
 	bool init() override;
 	void onEnter() override;
+	void setupUI();
 };
 
 #endif /* defined(__DOODLER_LOBBY__) */
